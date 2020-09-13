@@ -1,0 +1,26 @@
+Create two ec2 server
+login into the both server
+sudo su -
+sudo apt-get update
+install docker on both node(master & node)    sudo apt-get install docker.io
+sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -   
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+update the all node again by apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+
+kubeadm init --apiserver-advertise-address ip of master node --pod-network-cidr=192.168.0.0/16  ...this cidr for calico pod network
+kubeadm join 172.31.32.24:6443 --token v53od7.zyvzqnwttoe9z1h6 \  will get like this
+    
+    kubectl get nodes ....
+mkdir -p $HOME/.kube   ....on master
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  ....onmaster
+sudo chown $(id -u):$(id -g) $HOME/.kube/config  ..onmaster
+
+
+ kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+ kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+kubectl get nodes ... now show in ready mode .. if not able to see then
+run kubectl get pod --all-namespaces .....if all are up and running then it will show nodes in reday modes otherwise wait forthe time.
