@@ -24,3 +24,4 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config  ..onmaster
  kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
 kubectl get nodes ... now show in ready mode .. if not able to see then
 run kubectl get pod --all-namespaces .....if all are up and running then it will show nodes in reday modes otherwise wait forthe time.
+then we will deploy pod file ....but my pod status two is still showing pending state so i have not deployed.
